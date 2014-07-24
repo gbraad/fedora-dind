@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
 
 # First, make sure that cgroups are mounted correctly.
 CGROUP=/sys/fs/cgroup
@@ -104,7 +106,7 @@ ensure_loop $LOOP_B
 
 # If a pidfile is still around (for example after a container restart),
 # delete it so that docker can start.
-rm -rf /var/run/docker.pid
+rm -rf /var/run/docker.pid &>/dev/null
 
 docker -d -H unix:///var/run/docker.sock &
 
@@ -114,4 +116,4 @@ set -x
 eval "$@"
 set +x
 
-kill -15 $(cat /var/run/docker.pid)
+kill $(cat /var/run/docker.pid)
