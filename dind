@@ -1,6 +1,4 @@
 #!/bin/bash
-set -euo pipefail
-IFS=$'\n\t'
 
 # First, make sure that cgroups are mounted correctly.
 CGROUP=/sys/fs/cgroup
